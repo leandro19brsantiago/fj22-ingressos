@@ -62,7 +62,9 @@ public class SalaController {
     }
 
 
-    /*lista as sessoes relativas a salar*/
+    /*lista as sessoes relativas a salar
+     * Essa é uma anotação que serve para pegarmos informações do path da nossa ação
+     * */
     @GetMapping("/admin/sala/{id}/sessoes")
     public ModelAndView listaSessoes(@PathVariable("id") Integer id) {
     	    	
