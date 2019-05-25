@@ -61,6 +61,7 @@ public class SessaoController {
 	public ModelAndView salva(@Valid SessaoForm form, BindingResult result) {
 		if (result.hasErrors())
 			return form(form.getSalaId(), form);
+		
 		Sessao sessao = form.toSessao(salaDao, filmeDao);
 		
 		List<Sessao> sessoesDaSala = sessaoDao.buscaSessoesDaSala(sessao.getSala());
@@ -71,7 +72,8 @@ public class SessaoController {
 			sessaoDao.save(sessao);
 			return new ModelAndView("redirect:/admin/sala/" + form.getSalaId() + "/sessoes");
 		}
-		return form(form.getFilmeId(), form);
+		
+		return form(form.getSalaId(), form);
 		
 	}
 	
