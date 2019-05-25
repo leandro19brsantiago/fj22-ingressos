@@ -10,10 +10,10 @@ import java.util.List;
 /**
  * Created by nando on 03/03/17.
  */
-@Repository
+@Repository//vai armazenar as informações
 public class SalaDao {
 
-    @PersistenceContext
+    @PersistenceContext//esse é o contexto de persistencia
     private EntityManager manager;
 
     public Sala findOne(Integer id) {
