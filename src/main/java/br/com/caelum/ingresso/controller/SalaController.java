@@ -62,7 +62,7 @@ public class SalaController {
     }
 
 
-    /*lista as sessoes relativas a sala*/
+    /*lista as sessoes relativas a salar*/
     @GetMapping("/admin/sala/{id}/sessoes")
     public ModelAndView listaSessoes(@PathVariable("id") Integer id) {
     	    	
