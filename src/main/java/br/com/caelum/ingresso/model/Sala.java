@@ -31,7 +31,7 @@ public class Sala {
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Lugar> lugares = new HashSet<>();
     
-    private BigDecimal preco = new BigDecimal(0.0);
+    private BigDecimal preco = BigDecimal.ZERO;
 
     /**
      * @deprecated hibernate only
@@ -95,7 +95,7 @@ public class Sala {
         return optional.get().getId();
     }
 
-    //dava erro por questão da scale por ser inicializado com zero
+    //dava erro por questão da scale por ser inicializado foi na base e retorna null
 	public BigDecimal getPreco() {
 		
 		if (preco != null) {

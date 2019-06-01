@@ -26,7 +26,7 @@ public class Sessao {
 	@ManyToOne
 	private Filme filme;
 	
-	private BigDecimal preco = new BigDecimal(0.0);
+	private BigDecimal preco = BigDecimal.ZERO;
 
 	public Sessao() {
 
@@ -34,6 +34,16 @@ public class Sessao {
 	}
 	
 	public Sessao(LocalTime horario, Sala sala, Filme filme ,BigDecimal preco) {
+
+		this.horario = horario;
+		this.sala = sala;
+		this.filme = filme;
+		this.preco = sala.getPreco().add(filme.getPreco());//soma com o preço do filme
+		
+
+	}
+	
+	public Sessao(LocalTime horario, Sala sala, Filme filme) {
 
 		this.horario = horario;
 		this.sala = sala;
