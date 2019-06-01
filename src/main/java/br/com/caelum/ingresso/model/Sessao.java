@@ -1,6 +1,7 @@
 package br.com.caelum.ingresso.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalTime;
 
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-@Entity
+@Entity 
 public class Sessao {
 	
 	@Id
@@ -25,18 +26,19 @@ public class Sessao {
 	@ManyToOne
 	private Filme filme;
 	
-	private BigDecimal preco;
+	private BigDecimal preco = new BigDecimal(0.0);
 
 	public Sessao() {
 
 		
 	}
 	
-	public Sessao(LocalTime horario, Sala sala, Filme filme) {
+	public Sessao(LocalTime horario, Sala sala, Filme filme ,BigDecimal preco) {
 
 		this.horario = horario;
 		this.sala = sala;
 		this.filme = filme;
+		this.preco = sala.getPreco().add(filme.getPreco());//soma com o preço do filme
 		
 
 	}
@@ -74,7 +76,7 @@ public class Sessao {
 	}
 
 	public BigDecimal getPreco() {
-		return preco;
+		return preco.setScale(2,RoundingMode.HALF_UP);
 	}
 
 	public void setPreco(BigDecimal preco) {

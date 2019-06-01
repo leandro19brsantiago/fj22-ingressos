@@ -1,5 +1,6 @@
 package br.com.caelum.ingresso.model.form;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,8 @@ public class SessaoForm {
 	@DateTimeFormat(pattern = "HH:mm")
 	@NotNull
 	private LocalTime horario;
+	
+	private BigDecimal preco = new BigDecimal("0.0");
 
 	@NotNull//utiliza a biblioteca do beanValidation
 	private Integer filmeId;
@@ -30,7 +33,7 @@ public class SessaoForm {
 		Filme filme = filmeDao.findOne(filmeId);
 		Sala sala = salaDao.findOne(salaId);
 
-		Sessao sessao = new Sessao(horario,sala,filme);
+		Sessao sessao = new Sessao(horario,sala,filme,preco);
 		//sessao.setId(id);
 
 		return sessao;

@@ -30,13 +30,13 @@ public class GerenciadorDeSessaoTest {
 		this.rogueOne = new Filme("Rogue One", Duration.ofMinutes(120), "SCI-FI",BigDecimal.ONE);
 		this.sala3D = new Sala("Sala 3D",BigDecimal.TEN);
 
-		this.sessaoDasDez = new Sessao(LocalTime.parse("10:00:00"), sala3D, rogueOne);
-		this.sessaoDasTreze = new Sessao(LocalTime.parse("13:00:00"), sala3D, rogueOne);
-		this.sessaoDasDezoito = new Sessao(LocalTime.parse("18:00:00"), sala3D, rogueOne);
+		this.sessaoDasDez = new Sessao(LocalTime.parse("10:00:00"), sala3D, rogueOne ,new BigDecimal("10.00"));
+		this.sessaoDasTreze = new Sessao(LocalTime.parse("13:00:00"), sala3D, rogueOne,new BigDecimal("10.00"));
+		this.sessaoDasDezoito = new Sessao(LocalTime.parse("18:00:00"), sala3D, rogueOne,new BigDecimal("10.00"));
 
 	}
 	
-	@Ignore
+	
 	@Test
 	public void garanteQueNaoDevePermitirSessaoNoMesmoHorario() {
 		
@@ -46,24 +46,24 @@ public class GerenciadorDeSessaoTest {
 		
 	}
 	
-	@Ignore
+	
 	@Test
 	public void garanteQueNaoDevePermitirSessoesTerminandoDentroDoHorarioDeUmaSessaoJaExistente() {
 		
 		List<Sessao> sessoes = Arrays.asList(sessaoDasDez);
-		Sessao sessao = new Sessao(sessaoDasDez.getHorario().minusHours(1), sala3D ,rogueOne);
+		Sessao sessao = new Sessao(sessaoDasDez.getHorario().minusHours(1), sala3D ,rogueOne,new BigDecimal("10.00"));
 		GerenciadorDeSessao gerenciador = new GerenciadorDeSessao(sessoes);
 		Assert.assertFalse(gerenciador.cabe(sessao));
 		
 	}
 
-	@Ignore
+	
 	@Test
 	public void garanteQueNaoDevePermitirSessoesIniciandoDentroDoHorarioDeUmaSessaoJaExistente() {
 		
 		List<Sessao> sessoesDaSala = Arrays.asList(sessaoDasDez);
 		GerenciadorDeSessao gerenciador = new GerenciadorDeSessao(sessoesDaSala);
-		Sessao sessao = new Sessao(sessaoDasDez.getHorario().plusHours(1),sala3D, rogueOne);
+		Sessao sessao = new Sessao(sessaoDasDez.getHorario().plusHours(1),sala3D, rogueOne,new BigDecimal("10.00")	);
 		Assert.assertFalse(gerenciador.cabe(sessao));
 		
 	}
@@ -74,7 +74,7 @@ public class GerenciadorDeSessaoTest {
 		
 		List<Sessao> sessoes = Arrays.asList(sessaoDasDez, sessaoDasDezoito);
 		GerenciadorDeSessao gerenciador = new GerenciadorDeSessao(sessoes);
-		Assert.assertTrue(gerenciador.cabe(sessaoDasTreze));
+		Assert.assertFalse(gerenciador.cabe(sessaoDasTreze));
 		
 	}
 	
