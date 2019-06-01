@@ -26,7 +26,7 @@ public class Sessao {
 	@ManyToOne
 	private Filme filme;
 	
-	private BigDecimal preco = BigDecimal.ZERO;
+	private BigDecimal preco = new BigDecimal(0.0);
 
 	public Sessao() {
 

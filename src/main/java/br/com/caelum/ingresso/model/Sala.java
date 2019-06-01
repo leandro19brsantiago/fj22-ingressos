@@ -31,7 +31,7 @@ public class Sala {
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Lugar> lugares = new HashSet<>();
     
-    private BigDecimal preco = BigDecimal.ZERO;
+    private BigDecimal preco = new BigDecimal(0.0);
 
     /**
      * @deprecated hibernate only

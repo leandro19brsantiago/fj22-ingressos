@@ -17,10 +17,14 @@ public class Filme {
     @Id
     @GeneratedValue
     private Integer id;
+    
     private String nome;
+    
     private Duration duracao;
+    
     private String genero;
-    private BigDecimal preco = BigDecimal.ZERO;
+    
+    private BigDecimal preco = new BigDecimal(0.0);
     
     
     
@@ -71,6 +75,7 @@ public class Filme {
     }
 
     public void setDuracao(long duracao) {
+    	
         this.duracao = Duration.ofMinutes(duracao);
     }
 
@@ -89,10 +94,4 @@ public class Filme {
 	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
 	}
-
-	public void setDuracao(Duration duracao) {
-		this.duracao = duracao;
-	}
-    
-    
 }

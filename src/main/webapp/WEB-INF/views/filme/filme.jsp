@@ -29,7 +29,7 @@
             </div>
 
             <div class="form-group">
-                <label for="duracao">Duracao:</label>
+                <label for="duracao">Duracão:</label>
                 <input id="duracao" type="text" name="duracao" class="form-control"
                        value="${filme.duracao.toMinutes()}">
                 <c:forEach items="${bindingResult.getFieldErrors('duracao')}" var="error">
