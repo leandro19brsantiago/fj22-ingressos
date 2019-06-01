@@ -1,6 +1,7 @@
 package br.com.caelum.ingresso.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -17,8 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import br.com.caelum.ingresso.dao.FilmeDao;
 import br.com.caelum.ingresso.dao.SalaDao;
 import br.com.caelum.ingresso.dao.SessaoDao;
+import br.com.caelum.ingresso.model.ImagemCapa;
 import br.com.caelum.ingresso.model.Sessao;
 import br.com.caelum.ingresso.model.form.SessaoForm;
+import br.com.caelum.ingresso.rest.OmdbClient;
 import br.com.caelum.ingresso.validacao.GerenciadorDeSessao;
 
 // controller para o Spring
@@ -31,6 +34,8 @@ public class SessaoController {
 	private SalaDao salaDao;
 	@Autowired
 	private FilmeDao filmeDao;
+	@Autowired
+	private OmdbClient client;
 
 	/*
 	 * atende a requisição da URL sesao que deve receber um id da sala utilzando a
@@ -61,22 +66,38 @@ public class SessaoController {
 	public ModelAndView salva(@Valid SessaoForm form, BindingResult result) {
 		if (result.hasErrors())
 			return form(form.getSalaId(), form);
-		
+
 		Sessao sessao = form.toSessao(salaDao, filmeDao);
-		
+
 		List<Sessao> sessoesDaSala = sessaoDao.buscaSessoesDaSala(sessao.getSala());
-		
+
 		GerenciadorDeSessao gerenciadorDeSessao = new GerenciadorDeSessao(sessoesDaSala);
-		
+
 		if (gerenciadorDeSessao.cabe(sessao)) {
 			sessaoDao.save(sessao);
 			return new ModelAndView("redirect:/admin/sala/" + form.getSalaId() + "/sessoes");
 		}
-		
+
 		return form(form.getSalaId(), form);
+
+	}
+
+	@GetMapping("/sessao/{id}/lugares")
+	public ModelAndView lugaresNaSessao(@PathVariable("id") Integer sessaoId) {
+		
+		ModelAndView modelAndView = new ModelAndView("sessao/lugares");
+		
+		Sessao sessao = sessaoDao.findOne(sessaoId);
+		
+		Optional<ImagemCapa> imagemCapa = client.request(sessao.getFilme(), ImagemCapa.class);
+		
+		modelAndView.addObject("sessao", sessao);
+		modelAndView.addObject("imagemCapa", imagemCapa.orElse(new ImagemCapa()));
+		
+		
+		return modelAndView;
+		
 		
 	}
-	
-	
-	
+
 }

@@ -34,5 +34,10 @@ public class SessaoDao {
 		return manager.createQuery("select s from Sessao s where s.filme = :filme", Sessao.class)
 				.setParameter("filme", filme).getResultList();
 	}
+	
+	//metodo para buscar sessão pelo id
+	public Sessao findOne(Integer id) {
+		return manager.find(Sessao.class, id);
+	}
 
 }

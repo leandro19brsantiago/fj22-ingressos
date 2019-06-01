@@ -3,6 +3,8 @@ package br.com.caelum.ingresso.model;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,46 +12,43 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-@Entity 
+@Entity
 public class Sessao {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	private LocalTime horario;
-	
+
 	@ManyToOne
 	private Sala sala;
-	
-	/*um filme pode ter varias sessões*/
+
+	/* um filme pode ter varias sessões */
 	@ManyToOne
 	private Filme filme;
-	
+
 	private BigDecimal preco = new BigDecimal(0.0);
 
 	public Sessao() {
 
-		
 	}
-	
-	public Sessao(LocalTime horario, Sala sala, Filme filme ,BigDecimal preco) {
+
+	public Sessao(LocalTime horario, Sala sala, Filme filme, BigDecimal preco) {
 
 		this.horario = horario;
 		this.sala = sala;
 		this.filme = filme;
-		this.preco = sala.getPreco().add(filme.getPreco());//soma com o preço do filme
-		
+		this.preco = sala.getPreco().add(filme.getPreco());// soma com o preço do filme
 
 	}
-	
+
 	public Sessao(LocalTime horario, Sala sala, Filme filme) {
 
 		this.horario = horario;
 		this.sala = sala;
 		this.filme = filme;
-		this.preco = sala.getPreco().add(filme.getPreco());//soma com o preço do filme
-		
+		this.preco = sala.getPreco().add(filme.getPreco());// soma com o preço do filme
 
 	}
 
@@ -86,13 +85,16 @@ public class Sessao {
 	}
 
 	public BigDecimal getPreco() {
-		return preco.setScale(2,RoundingMode.HALF_UP);
+		return preco.setScale(2, RoundingMode.HALF_UP);
 	}
 
 	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
 	}
-	
-	
+
+	//lugares para a tela
+	public Map<String, List<Lugar>> getMapaDeLugares() {
+		return sala.getMapaDeLugares();
+	}
 
 }
