@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.ManyToAny;
-
 import br.com.caelum.ingresso.desconto.Desconto;
 
 @Entity
@@ -24,7 +22,7 @@ public class Ingresso {
 	@ManyToOne
 	private Sessao sessao;
 	
-	private BigDecimal preco;
+	private BigDecimal preco = BigDecimal.ZERO;
 	
 	@ManyToOne
 	private Lugar lugar;
@@ -48,8 +46,10 @@ public class Ingresso {
 	
 	public Ingresso(Sessao sessao, TipoDeIngresso tipoDeIngresso, Lugar lugar) {
 		this.sessao = sessao;
+		this.preco = tipoDeIngresso.aplicaDesconto(sessao.getPreco());
 		this.tipoDeIngresso = tipoDeIngresso;
 		this.lugar = lugar;
+		
 	}
 
 	public Sessao getSessao() {
