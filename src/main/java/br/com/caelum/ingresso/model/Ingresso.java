@@ -46,6 +46,12 @@ public class Ingresso {
 		
 	}
 	
+	public Ingresso(Sessao sessao, TipoDeIngresso tipoDeIngresso, Lugar lugar) {
+		this.sessao = sessao;
+		this.tipoDeIngresso = tipoDeIngresso;
+		this.lugar = lugar;
+	}
+
 	public Sessao getSessao() {
 		return sessao;
 	}
